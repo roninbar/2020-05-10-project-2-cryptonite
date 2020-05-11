@@ -18,7 +18,7 @@ $(function () {
                                     More Info
                                 </button>
                                 <div class="collapse mt-4" id="${coin.id}-more-info">
-                                    <div class="card card-body border-dark">
+                                    <div class="card card-body border-primary">
                                         <div class="spinner-grow"></div>
                                         <div class="spinner-grow"></div>
                                         <div class="spinner-grow"></div>
