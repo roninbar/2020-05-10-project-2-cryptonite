@@ -10,11 +10,20 @@ $(function () {
                             <div class="card-body">
                                 <h5 class="card-title">${coin.symbol}</h5>
                                 <div class="custom-control custom-switch" style="position: absolute; top: 22px; right: 25px;">
-                                    <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                                    <label class="custom-control-label" for="customSwitch1"></label>
+                                    <input type="checkbox" class="custom-control-input" id="${coin.id}">
+                                    <label class="custom-control-label" for="${coin.id}"></label>
                                 </div>
                                 <p>${coin.name}</p>
-                                <button class="btn btn-primary" type="button">More Info</button>
+                                <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#${coin.id}-more-info">
+                                    More Info
+                                </button>
+                                <div class="collapse mt-4" id="${coin.id}-more-info">
+                                    <div class="card card-body border-dark">
+                                        <div class="spinner-grow"></div>
+                                        <div class="spinner-grow"></div>
+                                        <div class="spinner-grow"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>`)));
         });
