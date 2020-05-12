@@ -19,15 +19,15 @@
         <div class="row border border-bottom-0 border-dark">
             <div class="col-12">
                 <nav class="navbar navbar-expand-sm navbar-light bg-light d-flex justify-content-between">
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav nav">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">Home</a>
+                            <a class="nav-link active" data-toggle="tab" href="#home" id="home-tab">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Live Reports</a>
+                            <a class="nav-link" data-toggle="tab" href="#reports" id="reports-tab">Live Reports</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">About</a>
+                            <a class="nav-link" data-toggle="tab" href="#about" id="about-tab">About</a>
                         </li>
                     </ul>
                     <form class="form-inline">
@@ -36,82 +36,88 @@
                 </nav>
             </div>
         </div>
-        <div class="row border border-top-0 border-dark" id="cards">
-            <div class="card col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                <div class="card-body">
-                    <h5 class="card-title text-uppercase">btc</h5>
-                    <div class="custom-control custom-switch" style="position: absolute; top: 22px; right: 25px;">
-                        <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                        <label class="custom-control-label" for="customSwitch1"></label>
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="home">
+                <div class="row border border-top-0 border-dark" id="cards">
+                    <div class="card col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                        <div class="card-body">
+                            <h5 class="card-title text-uppercase">btc</h5>
+                            <div class="custom-control custom-switch" style="position: absolute; top: 22px; right: 25px;">
+                                <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                                <label class="custom-control-label" for="customSwitch1"></label>
+                            </div>
+                            <p>bitcoin</p>
+                            <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#btc-more-info">
+                                More Info
+                            </button>
+                            <div class="collapse mt-4" id="btc-more-info">
+                                <div class="card card-body border-primary">
+                                    <div class="spinner-grow"></div>
+                                    <div class="spinner-grow"></div>
+                                    <div class="spinner-grow"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <p>bitcoin</p>
-                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#btc-more-info">
-                        More Info
-                    </button>
-                    <div class="collapse mt-4" id="btc-more-info">
-                        <div class="card card-body border-primary">
-                            <div class="spinner-grow"></div>
-                            <div class="spinner-grow"></div>
-                            <div class="spinner-grow"></div>
+                    <div class="card col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                        <div class="card-body">
+                            <h5 class="card-title text-uppercase">ltc</h5>
+                        </div>
+                    </div>
+                    <div class="card col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                        <div class="card-body">
+                            <h5 class="card-title text-uppercase">aur</h5>
+                        </div>
+                    </div>
+                    <div class="card col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                        <div class="card-body">
+                            <h5 class="card-title text-uppercase">ppc</h5>
+                        </div>
+                    </div>
+                    <div class="card col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                        <div class="card-body">
+                            <h5 class="card-title text-uppercase">doge</h5>
+                        </div>
+                    </div>
+                    <div class="card col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                        <div class="card-body">
+                            <h5 class="card-title text-uppercase">nxt</h5>
+                        </div>
+                    </div>
+                    <div class="card col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                        <div class="card-body">
+                            <h5 class="card-title text-uppercase">omni</h5>
+                        </div>
+                    </div>
+                    <div class="card col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                        <div class="card-body">
+                            <h5 class="card-title text-uppercase">nmc</h5>
+                        </div>
+                    </div>
+                    <div class="card col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                        <div class="card-body">
+                            <h5 class="card-title text-uppercase">xcp</h5>
+                        </div>
+                    </div>
+                    <div class="card col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                        <div class="card-body">
+                            <h5 class="card-title text-uppercase">qrk</h5>
+                        </div>
+                    </div>
+                    <div class="card col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                        <div class="card-body">
+                            <h5 class="card-title text-uppercase">ftc</h5>
+                        </div>
+                    </div>
+                    <div class="card col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                        <div class="card-body">
+                            <h5 class="card-title text-uppercase">xpm</h5>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="card col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                <div class="card-body">
-                    <h5 class="card-title text-uppercase">ltc</h5>
-                </div>
-            </div>
-            <div class="card col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                <div class="card-body">
-                    <h5 class="card-title text-uppercase">aur</h5>
-                </div>
-            </div>
-            <div class="card col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                <div class="card-body">
-                    <h5 class="card-title text-uppercase">ppc</h5>
-                </div>
-            </div>
-            <div class="card col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                <div class="card-body">
-                    <h5 class="card-title text-uppercase">doge</h5>
-                </div>
-            </div>
-            <div class="card col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                <div class="card-body">
-                    <h5 class="card-title text-uppercase">nxt</h5>
-                </div>
-            </div>
-            <div class="card col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                <div class="card-body">
-                    <h5 class="card-title text-uppercase">omni</h5>
-                </div>
-            </div>
-            <div class="card col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                <div class="card-body">
-                    <h5 class="card-title text-uppercase">nmc</h5>
-                </div>
-            </div>
-            <div class="card col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                <div class="card-body">
-                    <h5 class="card-title text-uppercase">xcp</h5>
-                </div>
-            </div>
-            <div class="card col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                <div class="card-body">
-                    <h5 class="card-title text-uppercase">qrk</h5>
-                </div>
-            </div>
-            <div class="card col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                <div class="card-body">
-                    <h5 class="card-title text-uppercase">ftc</h5>
-                </div>
-            </div>
-            <div class="card col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                <div class="card-body">
-                    <h5 class="card-title text-uppercase">xpm</h5>
-                </div>
-            </div>
+            <div class="tab-pane fade" id="reports"></div>
+            <div class="tab-pane fade" id="about"></div>
         </div>
     </div>
 </body>
