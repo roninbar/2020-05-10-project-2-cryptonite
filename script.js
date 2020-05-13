@@ -1,7 +1,7 @@
 $(function () {
+    $('#cards').empty();
     $.getJSON('https://api.coingecko.com/api/v3/coins/list')
         .done(function (coins) {
-            $('#cards').empty();
             $('#cards')
                 .append(coins
                     .slice(2100, 2200)
@@ -19,7 +19,7 @@ $(function () {
                                 </button>
                                 <div class="collapse mt-4 more-info" id="${coin.id}-more-info">
                                     <div class="card border-primary p-4" style="border-radius: 200em 200em 0 0;">
-                                        <img class="card-img-top img-thumbnail rounded-circle border-dark" src="img/pp.jpg" />
+                                        <img class="card-img-top img-thumbnail rounded-circle border-dark" src="img/dollar.gif" />
                                         <div class="card-body d-flex flex-column align-items-center">
                                             <div class="spinner-grow"></div>
                                             <div class="spinner-grow"></div>
