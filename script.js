@@ -41,8 +41,8 @@ $(function () {
                             const cardBody = $('.card-body', e.target);
                             cardBody.empty();
                             cardBody.append(`<h5 class="card-text text-center">&dollar;${info.market_data.current_price.usd}</h5>`);
-                            cardBody.append(`<h5 class="card-text text-center">&pound;${info.market_data.current_price.usd}</h5>`);
-                            cardBody.append(`<h5 class="card-text text-center">&#8362;${info.market_data.current_price.usd}</h5>`);
+                            cardBody.append(`<h5 class="card-text text-center">&pound;${info.market_data.current_price.gbp}</h5>`);
+                            cardBody.append(`<h5 class="card-text text-center">&#8362;${info.market_data.current_price.ils}</h5>`);
                         });
                 }
             });
