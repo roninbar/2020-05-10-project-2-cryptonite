@@ -1,5 +1,15 @@
 $(function () {
+
     $('#cards').empty();
+
+    $('#search').on('input', function (e) {
+        const substr = $(e.target).val().toLowerCase();
+        $('#cards').children().removeClass('d-none');
+        $('#cards').children().filter(function () {
+            return !$(this).text().toLowerCase().includes(substr);
+        }).addClass('d-none');
+    });
+
     $.getJSON('https://api.coingecko.com/api/v3/coins/list')
         .done(function (coins) {
             $('#cards')
