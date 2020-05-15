@@ -4,10 +4,10 @@ $(function () {
 
     $('#search').on('input', function (e) {
         const substr = $(e.target).val().toLowerCase();
-        $('#cards').children().removeClass('d-none');
+        $('#cards').children().hide();
         $('#cards').children().filter(function () {
-            return !$(this).text().toLowerCase().includes(substr);
-        }).addClass('d-none');
+            return $(this).text().toLowerCase().includes(substr);
+        }).show();
     });
 
     $.getJSON('https://api.coingecko.com/api/v3/coins/list')
