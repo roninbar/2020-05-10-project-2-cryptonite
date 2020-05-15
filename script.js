@@ -20,7 +20,9 @@ $(function () {
 
     $.getJSON('https://api.coingecko.com/api/v3/coins/list')
         .done(function (coins) {
+
             $('#cards').empty();
+
             $('#cards')
                 .append(coins
                     .slice(2100, 2200)
@@ -48,6 +50,7 @@ $(function () {
                                 </div>
                             </div>
                         </div>`)));
+
             $('.more-info').on('shown.bs.collapse', function (e) {
                 const match = e.target.id.match(/(.*)-more-info/);
                 if (1 < match.length) {
@@ -65,5 +68,7 @@ $(function () {
                     throw new Error(`${e.target.id} doesn't match expected pattern /(.*)-more-info/.`);
                 }
             });
+
         });
+        
 });
