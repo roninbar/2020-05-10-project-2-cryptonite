@@ -50,9 +50,7 @@ $(function () {
                         </div>`)));
             $('.more-info').on('shown.bs.collapse', function (e) {
                 const match = e.target.id.match(/(.*)-more-info/);
-                if (match.length < 2) {
-                    throw new Error(`${e.target.id} doesn't match expected pattern /(.*)-more-info/.`);
-                } else {
+                if (1 < match.length) {
                     $.getJSON(`https://api.coingecko.com/api/v3/coins/${match[1]}?tickers=false&community_data=false&developer_data=false`)
                         .done(function (info) {
                             const cardImg = $('.card-img-top', e.target);
@@ -63,6 +61,8 @@ $(function () {
                             cardBody.append(`<h5 class="card-text text-center">&pound;${info.market_data.current_price.gbp}</h5>`);
                             cardBody.append(`<h5 class="card-text text-center">&#8362;${info.market_data.current_price.ils}</h5>`);
                         });
+                } else {
+                    throw new Error(`${e.target.id} doesn't match expected pattern /(.*)-more-info/.`);
                 }
             });
         });
