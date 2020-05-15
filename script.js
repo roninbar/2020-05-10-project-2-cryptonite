@@ -2,6 +2,14 @@ $(function () {
 
     $('#cards').empty();
 
+    $('#home-tab').on('hide.bs.tab', function (e) {
+        $('#search').hide();
+    });
+
+    $('#home-tab').on('show.bs.tab', function (e) {
+        $('#search').show();
+    })
+
     $('#search').on('input', function (e) {
         const substr = $(e.target).val().toLowerCase();
         $('#cards').children().hide();
