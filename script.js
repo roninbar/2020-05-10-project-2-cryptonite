@@ -12,7 +12,7 @@ $(function () {
             useUTC: false
         },
         title: {
-            text: 'Live random data'
+            text: 'Exchange Rates'
         },
         accessibility: {
             announceNewData: {
@@ -33,7 +33,7 @@ $(function () {
         yAxis: {
             type: 'logarithmic',
             title: {
-                text: 'Value'
+                text: 'USD'
             },
             plotLines: [{
                 value: 0,
@@ -43,7 +43,7 @@ $(function () {
         },
         tooltip: {
             headerFormat: '<b>{series.name}</b><br/>',
-            pointFormat: '{point.x:%Y-%m-%d %H:%M:%S}<br/>{point.y:.2f}'
+            pointFormat: '{point.x:%Y-%m-%d %H:%M:%S}<br/>${point.y:.4f}'
         },
         legend: {
             align: 'center',
