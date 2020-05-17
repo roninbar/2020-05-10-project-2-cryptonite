@@ -31,6 +31,7 @@ $(function () {
             tickPixelInterval: 150
         },
         yAxis: {
+            type: 'logarithmic',
             title: {
                 text: 'Value'
             },
@@ -71,6 +72,7 @@ $(function () {
             .get();
 
         if (fsyms.length > 0) {
+                                    
             const prices = await fetch(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${fsyms.join(',')}&tsyms=usd`)
                 .then(res => res.json());
             const now = Date.now();
@@ -94,7 +96,9 @@ $(function () {
                     const now = Date.now();
                     for (let i = 0; i < fsyms.length; i++) {
                         const series = chart.get(fsyms[i]);
-                        series.addPoint([now, prices[fsyms[i]]['USD']], true, 10 <= series.data.length);
+                        if (series) {
+                            series.addPoint([now, prices[fsyms[i]]['USD']], true, 10 <= series.data.length);
+                        }
                     }
                 }
             }, 2000);
