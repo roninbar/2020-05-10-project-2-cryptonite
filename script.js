@@ -1,13 +1,115 @@
 $(function () {
 
+    let intervalId = 0;
+
+    const chart = Highcharts.chart('chart', {
+        chart: {
+            type: 'spline',
+            animation: Highcharts.svg,
+            marginRight: 10,
+        },
+        time: {
+            useUTC: false
+        },
+        title: {
+            text: 'Live random data'
+        },
+        accessibility: {
+            announceNewData: {
+                enabled: true,
+                minAnnounceInterval: 15000,
+                announcementFormatter: function (allSeries, newSeries, newPoint) {
+                    if (newPoint) {
+                        return 'New point added. Value: ' + newPoint.y;
+                    }
+                    return false;
+                }
+            }
+        },
+        xAxis: {
+            type: 'datetime',
+            tickPixelInterval: 150
+        },
+        yAxis: {
+            title: {
+                text: 'Value'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            headerFormat: '<b>{series.name}</b><br/>',
+            pointFormat: '{point.x:%Y-%m-%d %H:%M:%S}<br/>{point.y:.2f}'
+        },
+        legend: {
+            enabled: false
+        },
+        exporting: {
+            enabled: false
+        },
+    });
+
     $('#cards').empty();
 
-    $('#home-tab').on('hide.bs.tab', function (e) {
+    $('#home-tab').on('show.bs.tab', function () {
+        $('#search').show();
+    });
+
+    $('#home-tab').on('hide.bs.tab', function () {
         $('#search').hide();
     });
 
-    $('#home-tab').on('show.bs.tab', function (e) {
-        $('#search').show();
+    $('#reports-tab').on('show.bs.tab', async function (e) {
+
+        const fsyms = $('.card:has(input:checkbox:checked) h5.card-title')
+            .map(function () {
+                return $(this).text().toUpperCase();
+            })
+            .get();
+
+        if (fsyms.length > 0) {
+            const prices = await fetch(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${fsyms.join(',')}&tsyms=usd`)
+                .then(res => res.json());
+            const now = Date.now();
+            for (let i = 0; i < fsyms.length; i++) {
+                if (prices[fsyms[i]]) {
+                    chart.addSeries({
+                        id: fsyms[i],
+                        name: fsyms[i],
+                        data: [{
+                            x: now,
+                            y: prices[fsyms[i]]['USD'],
+                        }],
+                    });
+                }
+            }
+
+            intervalId = setInterval(async function () {
+                if (fsyms.length > 0) {
+                    const prices = await fetch(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${fsyms.join(',')}&tsyms=usd`)
+                        .then(res => res.json());
+                    const now = Date.now();
+                    for (let i = 0; i < fsyms.length; i++) {
+                        const series = chart.get(fsyms[i]);
+                        series.addPoint([now, prices[fsyms[i]]['USD']], true, 10 <= series.data.length);
+                    }
+                }
+            }, 2000);
+        }
+
+    });
+
+    $('#reports-tab').on('hide.bs.tab', function (e) {
+        if (intervalId) {
+            clearInterval(intervalId);
+            intervalId = 0;
+        }
+        while (chart.series.length > 0) {
+            chart.series[0].remove();
+        }
     });
 
     $('#search').on('input', function (e) {
@@ -25,14 +127,14 @@ $(function () {
 
             $('#cards')
                 .append(coins
-                    .slice(2100, 2200)
+                    .slice(0, 100)
                     .map(coin => $(`
                         <div class="card col-sm-6 col-md-4 col-lg-3 col-xl-2">
                             <div class="card-body">
                                 <h5 class="card-title text-uppercase">${coin.symbol}</h5>
                                 <div class="custom-control custom-switch" style="position: absolute; top: 22px; right: 25px;">
-                                    <input type="checkbox" class="custom-control-input" id="${coin.id}">
-                                    <label class="custom-control-label" for="${coin.id}"></label>
+                                    <input type="checkbox" class="custom-control-input" id="${coin.id}-select">
+                                    <label class="custom-control-label" for="${coin.id}-select"></label>
                                 </div>
                                 <p>${coin.name}</p>
                                 <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#${coin.id}-more-info">
@@ -71,92 +173,6 @@ $(function () {
 
         });
 
-    Highcharts.chart('chart', {
-        chart: {
-            type: 'spline',
-            animation: Highcharts.svg, // don't animate in old IE
-            marginRight: 10,
-            events: {
-                load: function () {
-
-                    // set up the updating of the chart each second
-                    var series = this.series[0];
-                    setInterval(function () {
-                        var x = (new Date()).getTime(), // current time
-                            y = Math.random();
-                        series.addPoint([x, y], true, true);
-                    }, 1000);
-                }
-            }
-        },
-
-        time: {
-            useUTC: false
-        },
-
-        title: {
-            text: 'Live random data'
-        },
-
-        accessibility: {
-            announceNewData: {
-                enabled: true,
-                minAnnounceInterval: 15000,
-                announcementFormatter: function (allSeries, newSeries, newPoint) {
-                    if (newPoint) {
-                        return 'New point added. Value: ' + newPoint.y;
-                    }
-                    return false;
-                }
-            }
-        },
-
-        xAxis: {
-            type: 'datetime',
-            tickPixelInterval: 150
-        },
-
-        yAxis: {
-            title: {
-                text: 'Value'
-            },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }]
-        },
-
-        tooltip: {
-            headerFormat: '<b>{series.name}</b><br/>',
-            pointFormat: '{point.x:%Y-%m-%d %H:%M:%S}<br/>{point.y:.2f}'
-        },
-
-        legend: {
-            enabled: false
-        },
-
-        exporting: {
-            enabled: false
-        },
-
-        series: [{
-            name: 'Random data',
-            data: (function () {
-                // generate an array of random data
-                var data = [],
-                    time = (new Date()).getTime(),
-                    i;
-
-                for (i = -19; i <= 0; i += 1) {
-                    data.push({
-                        x: time + i * 1000,
-                        y: Math.random()
-                    });
-                }
-                return data;
-            }())
-        }]
-    });
-
 });
+
+
