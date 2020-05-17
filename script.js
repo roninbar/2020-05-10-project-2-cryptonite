@@ -46,7 +46,9 @@ $(function () {
             pointFormat: '{point.x:%Y-%m-%d %H:%M:%S}<br/>{point.y:.2f}'
         },
         legend: {
-            enabled: false
+            align: 'center',
+            verticalAlign: 'top',
+            borderWidth: 1
         },
         exporting: {
             enabled: false
@@ -72,7 +74,7 @@ $(function () {
             .get();
 
         if (fsyms.length > 0) {
-                                    
+
             const prices = await fetch(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${fsyms.join(',')}&tsyms=usd`)
                 .then(res => res.json());
             const now = Date.now();
