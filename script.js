@@ -126,6 +126,15 @@ $(function () {
         }).show();
     });
 
+    $('#too-many-coins').on('show.bs.modal', function (e) {
+        $('#too-many-coins .modal-body').text(
+            $('#cards input:checkbox:checked')
+            .get()
+            .map(input => input.id.match(/(.*)-select/)[1])
+            .join(', ')
+        );
+    });
+
     $.getJSON('https://api.coingecko.com/api/v3/coins/list')
         .done(function (coins) {
 
@@ -159,7 +168,14 @@ $(function () {
                             </div>
                         </div>`)));
 
-            $('.more-info').on('shown.bs.collapse', function (e) {
+            $('#cards input:checkbox').click(function (e) {
+                if ($('#cards input:checkbox:checked').length > 1) {
+                    e.preventDefault();
+                    $('#too-many-coins').modal();
+                }
+            });
+
+            $('#cards .more-info').on('shown.bs.collapse', function (e) {
                 const match = e.target.id.match(/(.*)-more-info/);
                 if (1 < match.length) {
                     $.getJSON(`https://api.coingecko.com/api/v3/coins/${match[1]}?tickers=false&community_data=false&developer_data=false`)
