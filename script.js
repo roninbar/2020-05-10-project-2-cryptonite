@@ -152,10 +152,10 @@ $(function () {
                                     <label class="custom-control-label" for="${coin.id}-select"></label>
                                 </div>
                                 <p>${coin.name}</p>
-                                <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#${coin.id}-more-info">
+                                <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#more-info-${coin.id}">
                                     More Info
                                 </button>
-                                <div class="collapse mt-4 more-info" id="${coin.id}-more-info">
+                                <div class="collapse mt-4 more-info" id="more-info-${coin.id}">
                                     <div class="card border-primary p-4" style="border-radius: 200em 200em 0 0;">
                                         <img class="card-img-top img-thumbnail rounded-circle border-dark" src="img/dollar.gif" />
                                         <div class="card-body d-flex flex-column align-items-center">
@@ -176,7 +176,7 @@ $(function () {
             });
 
             $('#cards .more-info').on('shown.bs.collapse', function (e) {
-                const match = e.target.id.match(/(.*)-more-info/);
+                const match = e.target.id.match(/more-info-(.*)/);
                 if (1 < match.length) {
                     $.getJSON(`https://api.coingecko.com/api/v3/coins/${match[1]}?tickers=false&community_data=false&developer_data=false`)
                         .done(function (info) {
