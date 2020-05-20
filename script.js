@@ -126,7 +126,7 @@ $(function () {
         }).show();
     });
 
-    $('#too-many-coins').on('show.bs.modal', function (e) {
+    $('#too-many-coins').on('shown.bs.modal', function (e) {
         $('#too-many-coins .modal-body').text(
             $('#cards input:checkbox:checked')
             .get()
