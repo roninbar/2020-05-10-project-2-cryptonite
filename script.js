@@ -6,7 +6,7 @@ $(function () {
         chart: {
             type: 'spline',
             animation: Highcharts.svg,
-            marginRight: 10,
+            marginRight: 10
         },
         time: {
             useUTC: false
@@ -52,7 +52,7 @@ $(function () {
         },
         exporting: {
             enabled: false
-        },
+        }
     });
 
     $('#cards').empty();
