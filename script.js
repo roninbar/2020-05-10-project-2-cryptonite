@@ -130,7 +130,7 @@ $(function () {
         $('#too-many-coins .modal-body').text(
             $('#cards input:checkbox:checked')
             .get()
-            .map(input => input.id.match(/(.*)-select/)[1])
+            .map(input => input.id.match(/select-(.*)/)[1])
             .join(', ')
         );
     });
@@ -148,8 +148,8 @@ $(function () {
                             <div class="card-body">
                                 <h5 class="card-title text-uppercase">${coin.symbol}</h5>
                                 <div class="custom-control custom-switch" style="position: absolute; top: 22px; right: 25px;">
-                                    <input type="checkbox" class="custom-control-input" id="${coin.id}-select">
-                                    <label class="custom-control-label" for="${coin.id}-select"></label>
+                                    <input type="checkbox" class="custom-control-input" id="select-${coin.id}">
+                                    <label class="custom-control-label" for="select-${coin.id}"></label>
                                 </div>
                                 <p>${coin.name}</p>
                                 <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#more-info-${coin.id}">
