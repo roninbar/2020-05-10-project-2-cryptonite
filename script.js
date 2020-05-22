@@ -185,6 +185,8 @@ $(function () {
             $('#cards input:checkbox').click(function (e) {
                 if ($('#cards input:checkbox:checked').length > 1) {
                     e.preventDefault();
+                    const card = $(e.target).closest('.card');
+                    $('#too-many-coins .modal-title').text($('.card-title', card).text());
                     $('#too-many-coins').modal();
                 }
             });
