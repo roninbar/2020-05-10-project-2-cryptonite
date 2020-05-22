@@ -187,7 +187,10 @@ $(function () {
                     e.preventDefault();
                     const card = $(e.target).closest('.card');
                     $('#too-many-coins .modal-title').text($('.card-title', card).text());
-                    $('#too-many-coins').modal();
+                    // .modal() must be queued to run later in order to give .preventDefault() a chance to reset the checkbox
+                    // before the 'shown.bs.modal' event happens.
+                    const tooMany = $('#too-many-coins');
+                    setTimeout(tooMany.modal.bind(tooMany), 0);
                 }
             });
 
