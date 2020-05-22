@@ -129,14 +129,15 @@ $(function () {
     $('#too-many-coins').on('show.bs.modal', function () {
         const toggles = $('.card:has(input:checkbox:checked)')
             .map(function () {
+                const id = $('input:checkbox', this).attr('id').match(/select-(.*)/)[1];
                 const symbol = $('.card-title', this).text();
                 return $(`
                     <div class="input-group col-md-4 my-2">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="customSwitch1" checked>
-                                    <label class="custom-control-label" for="customSwitch1"></label>
+                                    <input type="checkbox" class="custom-control-input" id="selected-${id}" checked>
+                                    <label class="custom-control-label" for="selected-${id}"></label>
                                 </div>
                             </div>
                         </div>
