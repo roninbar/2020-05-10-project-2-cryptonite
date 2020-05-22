@@ -194,6 +194,7 @@ $(function () {
                     const card = $(e.target).closest('.card');
                     const symbol = $('.card-title', card).text();
                     $('#too-many-coins .modal-title').text(`You cannot select more than ${maxAllowed} coins. To select ${symbol.toUpperCase()}, first de-select one of the following:`);
+                    $('#save').text(`Select ${symbol.toUpperCase()}`);
                     // .modal() must be queued to run later in order to give .preventDefault() a chance to reset the checkbox
                     // before the 'shown.bs.modal' event happens.
                     const tooMany = $('#too-many-coins');
