@@ -126,13 +126,26 @@ $(function () {
         }).show();
     });
 
-    $('#too-many-coins').on('shown.bs.modal', function (e) {
-        $('#too-many-coins .modal-body').text(
-            $('#cards input:checkbox:checked')
-            .get()
-            .map(input => input.id.match(/select-(.*)/)[1])
-            .join(', ')
-        );
+    $('#too-many-coins').on('shown.bs.modal', function () {
+        const toggles = $('.card:has(input:checkbox:checked)')
+            .map(function () {
+                const symbol = $('.card-title', this).text();
+                return $(`
+                    <div class="input-group col-md-4 my-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="customSwitch1" checked>
+                                    <label class="custom-control-label" for="customSwitch1"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group-append">
+                            <div class="input-group-text">${symbol}</div>
+                        </div>
+                    </div>`).get();
+            });
+        $('#selected-coins').empty().append(toggles);
     });
 
     $.getJSON('https://api.coingecko.com/api/v3/coins/list')
