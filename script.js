@@ -1,4 +1,6 @@
 $(function () {
+    
+    const maxAllowed = 5;
 
     let intervalId = 0;
 
@@ -127,26 +129,30 @@ $(function () {
     });
 
     $('#too-many-coins').on('show.bs.modal', function () {
-        const toggles = $('.card:has(input:checkbox:checked)')
-            .map(function () {
-                const id = $('input:checkbox', this).attr('id').match(/select-(.*)/)[1];
-                const symbol = $('.card-title', this).text();
-                return $(`
-                    <div class="input-group col-md-4 my-2">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="selected-${id}" checked>
-                                    <label class="custom-control-label" for="selected-${id}"></label>
-                                </div>
+        $('#selected-coins').empty();
+        $('#cards .card:has(input:checkbox:checked)').each(function () {
+            const id = $('input:checkbox', this).attr('id').match(/select-(.*)/)[1];
+            const symbol = $('.card-title', this).text();
+            const inputGroup = $(`
+                <div class="input-group col-md-4 my-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="selected-${id}" checked>
+                                <label class="custom-control-label" for="selected-${id}"></label>
                             </div>
                         </div>
-                        <div class="input-group-append">
-                            <div class="input-group-text">${symbol}</div>
-                        </div>
-                    </div>`).get();
+                    </div>
+                    <div class="input-group-append">
+                        <div class="input-group-text">${symbol}</div>
+                    </div>
+                </div>`);
+            $('input:checkbox', inputGroup).change(function () {
+                $(`#select-${id}`).prop('checked', $(this).prop('checked'));
+                $('#save').prop('disabled', $('#cards input:checkbox:checked').length >= maxAllowed);
             });
-        $('#selected-coins').empty().append(toggles);
+            $('#selected-coins').append(inputGroup);
+        });
     });
 
     $.getJSON('https://api.coingecko.com/api/v3/coins/list')
@@ -183,11 +189,11 @@ $(function () {
                         </div>`)));
 
             $('#cards input:checkbox').click(function (e) {
-                if ($('#cards input:checkbox:checked').length > 1) {
+                if ($('#cards input:checkbox:checked').length > maxAllowed) {
                     e.preventDefault();
                     const card = $(e.target).closest('.card');
                     const symbol = $('.card-title', card).text();
-                    $('#too-many-coins .modal-title').text(`Too many coins selected. To select ${symbol.toUpperCase()}, first de-select some other coin(s).`);
+                    $('#too-many-coins .modal-title').text(`You cannot select more than ${maxAllowed} coins. To select ${symbol.toUpperCase()}, first de-select one of the following:`);
                     // .modal() must be queued to run later in order to give .preventDefault() a chance to reset the checkbox
                     // before the 'shown.bs.modal' event happens.
                     const tooMany = $('#too-many-coins');
