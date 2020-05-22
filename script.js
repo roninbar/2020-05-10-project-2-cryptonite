@@ -155,6 +155,12 @@ $(function () {
         });
     });
 
+    $('#too-many-coins').on('hide.bs.modal', function () {
+        const checkboxes = $('#selected-coins input:checkbox');
+        checkboxes.prop('checked', true);
+        checkboxes.change();
+    });
+
     $.getJSON('https://api.coingecko.com/api/v3/coins/list')
         .done(function (coins) {
 
