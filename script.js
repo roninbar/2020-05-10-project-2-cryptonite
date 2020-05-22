@@ -67,7 +67,7 @@ $(function () {
 
     $('#reports-tab').on('show.bs.tab', async function (e) {
 
-        const fsyms = $('.card:has(input:checkbox:checked) h5.card-title')
+        const fsyms = $('.card:has(input:checkbox:checked) .card-title')
             .map(function () {
                 return $(this).text().toUpperCase();
             })
