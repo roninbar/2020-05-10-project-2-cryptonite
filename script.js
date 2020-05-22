@@ -189,7 +189,7 @@ $(function () {
                             cardBody.append(`<h5 class="card-text text-center">&#8362;${info.market_data.current_price.ils}</h5>`);
                         });
                 } else {
-                    throw new Error(`${e.target.id} doesn't match expected pattern /(.*)-more-info/.`);
+                    throw new Error(`"${e.target.id}" doesn't match expected pattern /more-info-(.*)/.`);
                 }
             });
 
