@@ -126,7 +126,7 @@ $(function () {
         }).show();
     });
 
-    $('#too-many-coins').on('shown.bs.modal', function () {
+    $('#too-many-coins').on('show.bs.modal', function () {
         const toggles = $('.card:has(input:checkbox:checked)')
             .map(function () {
                 const symbol = $('.card-title', this).text();
