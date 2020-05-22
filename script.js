@@ -186,7 +186,8 @@ $(function () {
                 if ($('#cards input:checkbox:checked').length > 1) {
                     e.preventDefault();
                     const card = $(e.target).closest('.card');
-                    $('#too-many-coins .modal-title').text($('.card-title', card).text());
+                    const symbol = $('.card-title', card).text();
+                    $('#too-many-coins .modal-title').text(`Too many coins selected. To select ${symbol.toUpperCase()}, first de-select some other coin(s).`);
                     // .modal() must be queued to run later in order to give .preventDefault() a chance to reset the checkbox
                     // before the 'shown.bs.modal' event happens.
                     const tooMany = $('#too-many-coins');
