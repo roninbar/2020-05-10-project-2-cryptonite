@@ -134,7 +134,7 @@ $(function () {
             const id = $('input:checkbox', this).attr('id').match(/select-(.*)/)[1];
             const symbol = $('.card-title', this).text();
             const inputGroup = $(`
-                <div class="input-group col-md-4 my-2">
+                <div class="input-group col-6 col-md-4 my-2">
                     <div class="input-group-prepend">
                         <div class="input-group-text">
                             <div class="custom-control custom-switch">
