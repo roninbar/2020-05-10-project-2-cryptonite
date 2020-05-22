@@ -144,7 +144,7 @@ $(function () {
                         </div>
                     </div>
                     <div class="input-group-append">
-                        <div class="input-group-text text-uppercase">${symbol}</div>
+                        <label for="selected-${id}" class="input-group-text text-uppercase">${symbol}</label>
                     </div>
                 </div>`);
             $('input:checkbox', inputGroup).change(function () {
