@@ -101,7 +101,7 @@ $(function () {
                     for (let i = 0; i < fsyms.length; i++) {
                         const series = chart.get(fsyms[i]);
                         if (series) {
-                            series.addPoint([now, prices[fsyms[i]]['USD']], true, 1800 <= series.data.length);
+                            series.addPoint([now, prices[fsyms[i]]['USD']], true, series.data.length >= 30);
                         }
                     }
                 }
