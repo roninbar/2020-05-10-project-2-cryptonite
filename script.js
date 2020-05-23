@@ -69,7 +69,7 @@ $(function () {
 
     $('#reports-tab').on('show.bs.tab', async function (e) {
 
-        const fsyms = $('.card:has(input:checkbox:checked) .card-title')
+        const fsyms = $('.card:has(:checkbox:checked) .card-title')
             .map(function () {
                 return $(this).text().toUpperCase();
             })
@@ -130,8 +130,8 @@ $(function () {
 
     $('#too-many-coins').on('show.bs.modal', function () {
         $('#selected-coins').empty();
-        $('#cards .card:has(input:checkbox:checked)').each(function () {
-            const id = $('input:checkbox', this).attr('id').match(/select-(.*)/)[1];
+        $('#cards .card:has(:checkbox:checked)').each(function () {
+            const id = $(':checkbox', this).attr('id').match(/select-(.*)/)[1];
             const symbol = $('.card-title', this).text();
             const inputGroup = $(`
                 <div class="input-group w-auto mx-2 my-2">
@@ -147,16 +147,16 @@ $(function () {
                         <label for="selected-${id}" class="input-group-text text-uppercase">${symbol}</label>
                     </div>
                 </div>`);
-            $('input:checkbox', inputGroup).change(function () {
+            $(':checkbox', inputGroup).change(function () {
                 $(`#select-${id}`).prop('checked', $(this).prop('checked'));
-                $('#too-many-coins form :submit').prop('disabled', $('#cards input:checkbox:checked').length >= maxAllowed);
+                $('#too-many-coins form :submit').prop('disabled', $('#cards :checkbox:checked').length >= maxAllowed);
             });
             $('#selected-coins').append(inputGroup);
         });
     });
 
     $('#too-many-coins').on('hide.bs.modal', function () {
-        const checkboxes = $('#selected-coins input:checkbox');
+        const checkboxes = $('#selected-coins :checkbox');
         checkboxes.prop('checked', true);
         checkboxes.change();
     });
@@ -208,8 +208,8 @@ $(function () {
                             </label>
                         </div>`)));
 
-            $('#cards input:checkbox').click(function (e) {
-                if ($('#cards input:checkbox:checked').length > maxAllowed) {
+            $('#cards :checkbox').click(function (e) {
+                if ($('#cards :checkbox:checked').length > maxAllowed) {
                     e.preventDefault();
                     showModal(e.target);
                 }
