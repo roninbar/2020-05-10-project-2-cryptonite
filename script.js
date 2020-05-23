@@ -101,7 +101,7 @@ $(function () {
                     for (let i = 0; i < fsyms.length; i++) {
                         const series = chart.get(fsyms[i]);
                         if (series) {
-                            series.addPoint([now, prices[fsyms[i]]['USD']], true, 10 <= series.data.length);
+                            series.addPoint([now, prices[fsyms[i]]['USD']], true, 1800 <= series.data.length);
                         }
                     }
                 }
@@ -110,7 +110,7 @@ $(function () {
 
     });
 
-    $('#reports-tab').on('hide.bs.tab', function (e) {
+    $('#reports-tab').on('hide.bs.tab', function () {
         if (intervalId) {
             clearInterval(intervalId);
             intervalId = 0;
@@ -120,8 +120,8 @@ $(function () {
         }
     });
 
-    $('#search').on('input', function (e) {
-        const substr = $(e.target).val().toLowerCase();
+    $('#search').on('input', function ({ target }) {
+        const substr = $(target).val().toLowerCase();
         $('#cards').children().hide();
         $('#cards').children().filter(function () {
             return $(this).text().toLowerCase().includes(substr);
@@ -131,7 +131,7 @@ $(function () {
     $('#too-many-coins').on('show.bs.modal', function () {
         $('#selected-coins').empty();
         $('#cards .card:has(:checkbox:checked)').each(function () {
-            const id = $(':checkbox', this).attr('id').match(/select-(.*)/)[1];
+            const [, id] = $(':checkbox', this).attr('id').match(/select-(.*)/);
             const symbol = $('.card-title', this).text();
             const inputGroup = $(`
                 <div class="input-group w-auto mx-2 my-2">
@@ -183,19 +183,19 @@ $(function () {
             $('#cards')
                 .append(coins
                     .slice(0, 100)
-                    .map(coin => $(`
+                    .map(({ id, name, symbol }) => $(`
                         <div class="card col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                            <label for="select-${coin.id}" class="card-body">
-                                <h5 class="card-title text-uppercase">${coin.symbol}</h5>
+                            <label for="select-${id}" class="card-body">
+                                <h5 class="card-title text-uppercase">${symbol}</h5>
                                 <div class="custom-control custom-switch" style="position: absolute; top: 22px; right: 25px;">
-                                    <input type="checkbox" class="custom-control-input" id="select-${coin.id}">
-                                    <label class="custom-control-label" for="select-${coin.id}"></label>
+                                    <input type="checkbox" class="custom-control-input" id="select-${id}">
+                                    <label class="custom-control-label" for="select-${id}"></label>
                                 </div>
-                                <p>${coin.name}</p>
-                                <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#more-info-${coin.id}">
+                                <p>${name}</p>
+                                <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#more-info-${id}">
                                     More Info
                                 </button>
-                                <div class="collapse mt-4 more-info" id="more-info-${coin.id}">
+                                <div class="collapse mt-4 more-info" id="more-info-${id}">
                                     <div class="card border-primary p-4" style="border-radius: 200em 200em 0 0;">
                                         <img class="card-img-top img-thumbnail rounded-circle border-dark" src="img/dollar.gif" />
                                         <div class="card-body d-flex flex-column align-items-center">
@@ -218,7 +218,18 @@ $(function () {
             $('#cards .more-info').on('shown.bs.collapse', function ({ target }) {
                 const [, id] = target.id.match(/more-info-(.*)/);
                 $.getJSON(`https://api.coingecko.com/api/v3/coins/${id}?tickers=false&community_data=false&developer_data=false`)
-                    .done(function ({ image: { large: imageUrl }, market_data: { current_price: { usd, gbp, ils } } }) {
+                    .done(function ({
+                        image: {
+                            large: imageUrl
+                        },
+                        market_data: {
+                            current_price: {
+                                usd,
+                                gbp,
+                                ils
+                            }
+                        }
+                    }) {
                         const cardImg = $('.card-img-top', target);
                         cardImg.attr('src', imageUrl);
                         const cardBody = $('.card-body', target);
