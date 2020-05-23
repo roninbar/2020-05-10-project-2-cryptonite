@@ -175,72 +175,68 @@ $(function () {
         setTimeout(tooMany.modal.bind(tooMany, 'show'), 0);
     }
 
-    $.getJSON('https://api.coingecko.com/api/v3/coins/list')
-        .done(function (coins) {
+    $.getJSON('https://api.coingecko.com/api/v3/coins/list').done(function (coins) {
 
-            $('#cards').empty();
+        $('#cards').empty();
 
-            $('#cards')
-                .append(coins
-                    .slice(0, 100)
-                    .map(({ id, name, symbol }) => $(`
-                        <div class="card col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                            <label for="select-${id}" class="card-body">
-                                <h5 class="card-title text-uppercase">${symbol}</h5>
-                                <div class="custom-control custom-switch" style="position: absolute; top: 22px; right: 25px;">
-                                    <input type="checkbox" class="custom-control-input" id="select-${id}">
-                                    <label class="custom-control-label" for="select-${id}"></label>
-                                </div>
-                                <p>${name}</p>
-                                <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#more-info-${id}">
-                                    More Info
-                                </button>
-                                <div class="collapse mt-4 more-info" id="more-info-${id}">
-                                    <div class="card border-primary p-4" style="border-radius: 200em 200em 0 0;">
-                                        <img class="card-img-top img-thumbnail rounded-circle border-dark" src="img/dollar.gif" />
-                                        <div class="card-body d-flex flex-column align-items-center">
-                                            <div class="spinner-grow"></div>
-                                            <div class="spinner-grow"></div>
-                                            <div class="spinner-grow"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </label>
-                        </div>`)));
+        $('#cards').append(coins.slice(0, 100).map(({ id, name, symbol }) => $(`
+            <div class="card col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                <label for="select-${id}" class="card-body">
+                    <h5 class="card-title text-uppercase">${symbol}</h5>
+                    <div class="custom-control custom-switch" style="position: absolute; top: 22px; right: 25px;">
+                        <input type="checkbox" class="custom-control-input" id="select-${id}">
+                        <label class="custom-control-label" for="select-${id}"></label>
+                    </div>
+                    <p>${name}</p>
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#more-info-${id}">
+                        More Info
+                    </button>
+                    <div class="collapse mt-4 more-info" id="more-info-${id}">
+                        <div class="card border-primary p-4" style="border-radius: 200em 200em 0 0;">
+                            <img class="card-img-top img-thumbnail rounded-circle border-dark" src="img/dollar.gif" />
+                            <div class="card-body d-flex flex-column align-items-center">
+                                <div class="spinner-grow"></div>
+                                <div class="spinner-grow"></div>
+                                <div class="spinner-grow"></div>
+                            </div>
+                        </div>
+                    </div>
+                </label>
+            </div>`)));
 
-            $('#cards :checkbox').click(function (e) {
-                if ($('#cards :checkbox:checked').length > maxAllowed) {
-                    e.preventDefault();
-                    showModal(e.target);
-                }
-            });
-
-            $('#cards .more-info').on('shown.bs.collapse', function ({ target }) {
-                const [, id] = target.id.match(/more-info-(.*)/);
-                $.getJSON(`https://api.coingecko.com/api/v3/coins/${id}?tickers=false&community_data=false&developer_data=false`)
-                    .done(function ({
-                        image: {
-                            large: imageUrl
-                        },
-                        market_data: {
-                            current_price: {
-                                usd,
-                                gbp,
-                                ils
-                            }
-                        }
-                    }) {
-                        const cardImg = $('.card-img-top', target);
-                        cardImg.attr('src', imageUrl);
-                        const cardBody = $('.card-body', target);
-                        cardBody.empty();
-                        cardBody.append(`<h5 class="card-text">&dollar;${usd}</h5>`);
-                        cardBody.append(`<h5 class="card-text">&pound;${gbp}</h5>`);
-                        cardBody.append(`<h5 class="card-text">&#8362;${ils}</h5>`);
-                    });
-            });
-
+        $('#cards :checkbox').click(function (e) {
+            if ($('#cards :checkbox:checked').length > maxAllowed) {
+                e.preventDefault();
+                showModal(e.target);
+            }
         });
+
+        $('#cards .more-info').on('shown.bs.collapse', function ({ target }) {
+            const [, id] = target.id.match(/more-info-(.*)/);
+            $.getJSON(`https://api.coingecko.com/api/v3/coins/${id}?tickers=false&community_data=false&developer_data=false`)
+                .done(function ({
+                    image: {
+                        large: imageUrl
+                    },
+                    market_data: {
+                        current_price: {
+                            usd,
+                            gbp,
+                            ils
+                        }
+                    }
+                }) {
+                    const cardImg = $('.card-img-top', target);
+                    cardImg.attr('src', imageUrl);
+                    const cardBody = $('.card-body', target);
+                    cardBody.empty();
+                    cardBody.append(`<h5 class="card-text">&dollar;${usd}</h5>`);
+                    cardBody.append(`<h5 class="card-text">&pound;${gbp}</h5>`);
+                    cardBody.append(`<h5 class="card-text">&#8362;${ils}</h5>`);
+                });
+        });
+
+    });
 
 });
 
