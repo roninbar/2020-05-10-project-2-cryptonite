@@ -155,18 +155,27 @@ $(function () {
         });
     });
 
+    /**
+     * The id of the coin that triggered the modal.
+     */
+    let triggerId = '';
+
     $('#too-many-coins').on('hide.bs.modal', function () {
-        const checkboxes = $('#selected-coins :checkbox');
-        checkboxes.prop('checked', true);
-        checkboxes.change();
+        if (!$(`#select-${triggerId}`).prop('checked')) {
+            const checkboxes = $('#selected-coins :checkbox');
+            checkboxes.prop('checked', true);
+            checkboxes.change();
+        }
     });
 
     $('#too-many-coins form').submit(function (e) {
         e.preventDefault();
-        // $(e.target).prop('checked', true);
+        $(`#select-${triggerId}`).prop('checked', true);
+        $('#too-many-coins').modal('hide');
     });
 
     function showModal(checkbox) {
+        [, triggerId] = checkbox.id.match(/select-(.*)/);
         const card = $(checkbox).closest('.card');
         const symbol = $('.card-title', card).text();
         const tooMany = $('#too-many-coins');
