@@ -1,5 +1,5 @@
 $(function () {
-    
+
     const maxAllowed = 5;
 
     let intervalId = 0;
@@ -163,7 +163,17 @@ $(function () {
 
     $('#too-many-coins form').submit(function (e) {
         e.preventDefault();
+        // $(e.target).prop('checked', true);
     });
+
+    function showModal(checkbox) {
+        const card = $(checkbox).closest('.card');
+        const symbol = $('.card-title', card).text();
+        const tooMany = $('#too-many-coins');
+        $('.modal-title', tooMany).text(`You cannot select more than ${maxAllowed} coins. To select ${symbol.toUpperCase()}, first de-select one or more of the following:`);
+        $('form :submit', tooMany).text(`Select ${symbol.toUpperCase()}`);
+        setTimeout(tooMany.modal.bind(tooMany, 'show'), 0);
+    }
 
     $.getJSON('https://api.coingecko.com/api/v3/coins/list')
         .done(function (coins) {
@@ -201,14 +211,7 @@ $(function () {
             $('#cards input:checkbox').click(function (e) {
                 if ($('#cards input:checkbox:checked').length > maxAllowed) {
                     e.preventDefault();
-                    const card = $(e.target).closest('.card');
-                    const symbol = $('.card-title', card).text();
-                    $('#too-many-coins .modal-title').text(`You cannot select more than ${maxAllowed} coins. To select ${symbol.toUpperCase()}, first de-select one or more of the following:`);
-                    $('#too-many-coins form :submit').text(`Select ${symbol.toUpperCase()}`);
-                    // .modal() must be queued to run later in order to give .preventDefault() a chance to reset the checkbox
-                    // before the 'shown.bs.modal' event happens.
-                    const tooMany = $('#too-many-coins');
-                    setTimeout(tooMany.modal.bind(tooMany), 0);
+                    showModal(e.target);
                 }
             });
 
