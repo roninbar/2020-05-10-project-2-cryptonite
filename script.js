@@ -139,7 +139,7 @@ $(function () {
                         <div class="input-group-text">
                             <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" id="selected-${id}" checked>
-                                <label class="custom-control-label" for="selected-${id}"></label>
+                                <label for="selected-${id}" class="custom-control-label"></label>
                             </div>
                         </div>
                     </div>
