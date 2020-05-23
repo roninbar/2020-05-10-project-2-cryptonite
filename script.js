@@ -215,22 +215,18 @@ $(function () {
                 }
             });
 
-            $('#cards .more-info').on('shown.bs.collapse', function (e) {
-                const match = e.target.id.match(/more-info-(.*)/);
-                if (1 < match.length) {
-                    $.getJSON(`https://api.coingecko.com/api/v3/coins/${match[1]}?tickers=false&community_data=false&developer_data=false`)
-                        .done(function (info) {
-                            const cardImg = $('.card-img-top', e.target);
-                            cardImg.attr('src', info.image.large);
-                            const cardBody = $('.card-body', e.target);
-                            cardBody.empty();
-                            cardBody.append(`<h5 class="card-text text-center">&dollar;${info.market_data.current_price.usd}</h5>`);
-                            cardBody.append(`<h5 class="card-text text-center">&pound;${info.market_data.current_price.gbp}</h5>`);
-                            cardBody.append(`<h5 class="card-text text-center">&#8362;${info.market_data.current_price.ils}</h5>`);
-                        });
-                } else {
-                    throw new Error(`"${e.target.id}" doesn't match expected pattern /more-info-(.*)/.`);
-                }
+            $('#cards .more-info').on('shown.bs.collapse', function ({ target }) {
+                const [, id] = target.id.match(/more-info-(.*)/);
+                $.getJSON(`https://api.coingecko.com/api/v3/coins/${id}?tickers=false&community_data=false&developer_data=false`)
+                    .done(function ({ image: { large: imageUrl }, market_data: { current_price: { usd, gbp, ils } } }) {
+                        const cardImg = $('.card-img-top', target);
+                        cardImg.attr('src', imageUrl);
+                        const cardBody = $('.card-body', target);
+                        cardBody.empty();
+                        cardBody.append(`<h5 class="card-text">&dollar;${usd}</h5>`);
+                        cardBody.append(`<h5 class="card-text">&pound;${gbp}</h5>`);
+                        cardBody.append(`<h5 class="card-text">&#8362;${ils}</h5>`);
+                    });
             });
 
         });
