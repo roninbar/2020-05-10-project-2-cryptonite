@@ -181,6 +181,7 @@ $(function () {
         const tooMany = $('#too-many-coins');
         $('.modal-title', tooMany).text(`You cannot select more than ${maxAllowed} coins. To select ${symbol.toUpperCase()}, first de-select one or more of the following:`);
         $('form :submit', tooMany).text(`Select ${symbol.toUpperCase()}`);
+        $('form :submit', tooMany).prop('disabled', true);
         setTimeout(tooMany.modal.bind(tooMany, 'show'), 0);
     }
 
