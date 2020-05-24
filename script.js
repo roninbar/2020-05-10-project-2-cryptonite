@@ -185,7 +185,7 @@ $(function () {
         setTimeout(tooMany.modal.bind(tooMany, 'show'), 0);
     }
 
-    $.getJSON('https://api.coingecko.com/api/v3/coins/list').done(function (coins) {
+    $.getJSON('https://api.coingecko.com/api/v3/coins').done(function (coins) {
 
         $('#cards').empty();
 
