@@ -223,8 +223,7 @@ $(function () {
 
         $('#cards .more-info').on('shown.bs.collapse', function ({ target }) {
             const [, id] = target.id.match(/more-info-(.*)/);
-            $.getJSON(`https://api.coingecko.com/api/v3/coins/${id}?tickers=false&community_data=false&developer_data=false`)
-                .done(function ({
+            getMoreInfo(id).done(function ({
                     image: {
                         large: imageUrl
                     },
@@ -246,8 +245,11 @@ $(function () {
                 });
         });
 
+        function getMoreInfo(id) {
+            return $.getJSON(`https://api.coingecko.com/api/v3/coins/${id}?tickers=false&community_data=false&developer_data=false`);
+        }
+
     });
 
 });
-
 
