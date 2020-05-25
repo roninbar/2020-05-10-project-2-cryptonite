@@ -224,29 +224,48 @@ $(function () {
         $('#cards .more-info').on('shown.bs.collapse', function ({ target }) {
             const [, id] = target.id.match(/more-info-(.*)/);
             getMoreInfo(id).done(function ({
-                    image: {
-                        large: imageUrl
-                    },
-                    market_data: {
-                        current_price: {
-                            usd,
-                            gbp,
-                            ils
-                        }
+                image: {
+                    large: imageUrl
+                },
+                market_data: {
+                    current_price: {
+                        usd,
+                        gbp,
+                        ils
                     }
-                }) {
-                    const cardImg = $('.card-img-top', target);
-                    cardImg.attr('src', imageUrl);
-                    const cardBody = $('.card-body', target);
-                    cardBody.empty();
-                    cardBody.append(`<h5 class="card-text">&dollar;${usd}</h5>`);
-                    cardBody.append(`<h5 class="card-text">&pound;${gbp}</h5>`);
-                    cardBody.append(`<h5 class="card-text">&#8362;${ils}</h5>`);
-                });
+                }
+            }) {
+                const cardImg = $('.card-img-top', target);
+                const cardBody = $('.card-body', target);
+                cardImg.attr('src', imageUrl);
+                cardBody.empty();
+                cardBody.append(`<h5 class="card-text">&dollar;${usd}</h5>`);
+                cardBody.append(`<h5 class="card-text">&pound;${gbp}</h5>`);
+                cardBody.append(`<h5 class="card-text">&#8362;${ils}</h5>`);
+            });
         });
 
+        $('#cards .more-info').on('hidden.bs.collapse', function ({ target }) {
+            const cardBody = $('.card-body', target);
+            cardBody.empty();
+            cardBody.append('<div class="spinner-grow"></div>');
+            cardBody.append('<div class="spinner-grow"></div>');
+            cardBody.append('<div class="spinner-grow"></div>');
+        });
+
+        const moreInfoCache = {};
+
         function getMoreInfo(id) {
-            return $.getJSON(`https://api.coingecko.com/api/v3/coins/${id}?tickers=false&community_data=false&developer_data=false`);
+            if (moreInfoCache[id] && Date.now() - moreInfoCache[id].time < 120000) {
+                const d = $.Deferred();
+                d.resolve(moreInfoCache[id]);
+                return d.promise();
+            } else {
+                return $.getJSON(`https://api.coingecko.com/api/v3/coins/${id}?tickers=false&community_data=false&developer_data=false`)
+                    .done(function (coinInfo) {
+                        moreInfoCache[id] = { time: Date.now(), ...coinInfo };
+                    });
+            }
         }
 
     });
