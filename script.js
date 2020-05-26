@@ -230,7 +230,7 @@ $(function () {
                 market_data: {
                     current_price: {
                         usd,
-                        gbp,
+                        eur,
                         ils
                     }
                 }
@@ -240,7 +240,7 @@ $(function () {
                 cardImg.attr('src', imageUrl);
                 cardBody.empty();
                 cardBody.append(`<h5 class="card-text">&dollar;${usd}</h5>`);
-                cardBody.append(`<h5 class="card-text">&pound;${gbp}</h5>`);
+                cardBody.append(`<h5 class="card-text">&euro;${eur}</h5>`);
                 cardBody.append(`<h5 class="card-text">&#8362;${ils}</h5>`);
             });
         });
