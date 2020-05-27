@@ -28,12 +28,18 @@
 
 <body>
 
-    <div class="py-4 border-bottom border-dark rounded-bottom" style="background-color: lightgray;">
-        <div class="col-12">
-            <h1 class="font-weight-light">Cryptonite</h1>
+    <div class="position-relative">
+        <div class="py-4 border-bottom border-dark rounded-bottom" style="background-color: lightgray;">
+            <div class="col-12">
+                <h1 class="font-weight-light">Cryptonite</h1>
+            </div>
         </div>
+        <img class="d-none d-xl-block position-absolute" style="right: 0;top: 30px;width: 150px;z-index: 10;padding: 0 0 1px 1px;"
+            src="img/kryptonite.jpg" alt="Kryptonite">
+        <div class="d-none d-xl-block border-left border-bottom border-dark position-absolute"
+            style="right: 0;top: 30px;width: 150px;height: 122px;z-index: -10;"></div>
     </div>
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
             <div class="col-12">
                 <nav class="navbar navbar-expand-sm navbar-light bg-light d-flex justify-content-between">
@@ -165,7 +171,8 @@
                 <figure class="figure" style="width: 100%;">
                     <div id="chart"></div>
                     <figcaption class="figure-caption text-center">
-                        Source: <a href="https://min-api.cryptocompare.com/" target="_blank">https://min-api.cryptocompare.com/</a>
+                        Source: <a href="https://min-api.cryptocompare.com/"
+                            target="_blank">https://min-api.cryptocompare.com/</a>
                     </figcaption>
                 </figure>
             </div>
