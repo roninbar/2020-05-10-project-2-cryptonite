@@ -24,12 +24,13 @@
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
     <style>
-        #about img {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            max-width: 40%;
-            shape-outside: circle(50%);
+        @media (min-width: 576px) {
+            #about img {
+                position: absolute;
+                top: 22rem;
+                left: 50%;
+                transform: translateX(-50%);
+            }
         }
     </style>
     <title>Cryptonite</title>
@@ -193,7 +194,7 @@
                             <li><a href="https://www.geektime.co.il/evento-startup-raises-750k/" target="_blank" rel="noopener noreferrer">איוונטו</a></li>
                         </ul>
                     </div>
-                    <img src="img/pp.jpg" alt="Profile Picture" class="img-thumbnail border-dark rounded-circle">
+                    <img src="img/pp.jpg" alt="Profile Picture" class="img-thumbnail border-dark rounded-circle w-25 mx-auto">
                     <div class="col-12 col-sm" style="direction: ltr;">
                         <h2>Ron Inbar</h2>
                         <h3>Software Engineer</h3>
