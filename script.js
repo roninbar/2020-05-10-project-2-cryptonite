@@ -204,6 +204,11 @@ $(function () {
             }
         });
 
+        $('#cards [data-toggle="collapse"]').click(function (e) {
+            // This is necessary to prevent the coin getting selected/de-selected when pressing "More Info" on iPad.
+            e.preventDefault();
+        });
+
         $('#cards .more-info').on('shown.bs.collapse', function ({ target }) {
             const [, id] = target.id.match(/more-info-(.*)/);
             getMoreInfo(id).done(function ({
