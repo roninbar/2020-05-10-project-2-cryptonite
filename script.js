@@ -183,9 +183,7 @@ $(function () {
                         <label class="custom-control-label" for="select-${id}"></label>
                     </div>
                     <p>${name}</p>
-                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#more-info-${id}">
-                        More Info
-                    </button>
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#more-info-${id}">More Info</button>
                     <div class="collapse mt-4 more-info" id="more-info-${id}">
                         <div class="card border-primary p-4" style="border-radius: 200em 200em 0 0;">
                             <img class="card-img-top img-thumbnail rounded-circle border-dark" src="img/dollar.gif" />
