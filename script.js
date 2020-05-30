@@ -16,18 +16,6 @@ $(function () {
         title: {
             text: 'Exchange Rates'
         },
-        accessibility: {
-            announceNewData: {
-                enabled: true,
-                minAnnounceInterval: 15000,
-                announcementFormatter: function (allSeries, newSeries, newPoint) {
-                    if (newPoint) {
-                        return 'New point added. Value: ' + newPoint.y;
-                    }
-                    return false;
-                }
-            }
-        },
         xAxis: {
             type: 'datetime',
             tickPixelInterval: 150
@@ -52,9 +40,6 @@ $(function () {
             verticalAlign: 'top',
             borderWidth: 1
         },
-        exporting: {
-            enabled: false
-        }
     });
 
     $('#cards').empty();
