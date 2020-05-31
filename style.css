@@ -1,0 +1,8 @@
+@media (min-width: 576px) {
+    #about img {
+        position: absolute;
+        top: 22rem;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
