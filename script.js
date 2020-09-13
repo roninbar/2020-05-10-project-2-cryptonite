@@ -1,7 +1,18 @@
 $(function () {
 
-    const maxAllowed = 5;
+    /**
+     * The maximum number of points in each series of the chart.
+     */
+    const maxPointsPerSeries = 30;
 
+    /**
+     * The maximum number of coins that can be selected for inclusion in the chart.
+     */
+    const maxSelected = 5;
+
+    /**
+     * The ID of the interval that updates the chart.
+     */
     let intervalId = 0;
 
     const chart = Highcharts.chart('chart', {
@@ -60,34 +71,23 @@ $(function () {
             })
             .get();
 
+        for (let i = 0; i < fsyms.length; i++) {
+            chart.addSeries({
+                id: fsyms[i],
+                name: fsyms[i],
+            });
+        }
+
         if (fsyms.length > 0) {
 
-            const prices = await fetch(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${fsyms.join(',')}&tsyms=usd`)
-                .then(res => res.json());
-            const now = Date.now();
-            for (let i = 0; i < fsyms.length; i++) {
-                if (prices[fsyms[i]]) {
-                    chart.addSeries({
-                        id: fsyms[i],
-                        name: fsyms[i],
-                        data: [{
-                            x: now,
-                            y: prices[fsyms[i]]['USD'],
-                        }],
-                    });
-                }
-            }
-
             intervalId = setInterval(async function () {
-                if (fsyms.length > 0) {
-                    const prices = await fetch(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${fsyms.join(',')}&tsyms=usd`)
-                        .then(res => res.json());
-                    const now = Date.now();
-                    for (let i = 0; i < fsyms.length; i++) {
-                        const series = chart.get(fsyms[i]);
-                        if (series) {
-                            series.addPoint([now, prices[fsyms[i]]['USD']], true, series.data.length >= 30);
-                        }
+                const prices = await fetch(`https://min-api.cryptocompare.com/data/pricemulti?fsyms=${fsyms.join(',')}&tsyms=usd`)
+                    .then(res => res.json());
+                const now = Date.now();
+                for (let i = 0; i < fsyms.length; i++) {
+                    const series = chart.get(fsyms[i]);
+                    if (series) {
+                        series.addPoint([now, prices[fsyms[i]]['USD']], true, series.data.length >= maxPointsPerSeries);
                     }
                 }
             }, 2000);
@@ -134,7 +134,7 @@ $(function () {
                 </div>`);
             $(':checkbox', inputGroup).change(function () {
                 $(`#select-${id}`).prop('checked', $(this).prop('checked'));
-                $('#too-many-coins form :submit').prop('disabled', $('#cards :checkbox:checked').length >= maxAllowed);
+                $('#too-many-coins form :submit').prop('disabled', $('#cards :checkbox:checked').length >= maxSelected);
             });
             $('#selected-coins').append(inputGroup);
         });
@@ -164,7 +164,7 @@ $(function () {
         const card = $(checkbox).closest('.card');
         const symbol = $('.card-title', card).text();
         const tooMany = $('#too-many-coins');
-        $('.modal-title', tooMany).text(`You cannot select more than ${maxAllowed} coins. To select ${symbol.toUpperCase()}, first de-select one or more of the following:`);
+        $('.modal-title', tooMany).text(`You cannot select more than ${maxSelected} coins. To select ${symbol.toUpperCase()}, first de-select one or more of the following:`);
         $('form :submit', tooMany).text(`Select ${symbol.toUpperCase()}`);
         $('form :submit', tooMany).prop('disabled', true);
         setTimeout(tooMany.modal.bind(tooMany, 'show'), 0);
@@ -198,7 +198,7 @@ $(function () {
             </div>`)));
 
         $('#cards :checkbox').click(function (e) {
-            if ($('#cards :checkbox:checked').length > maxAllowed) {
+            if ($('#cards :checkbox:checked').length > maxSelected) {
                 e.preventDefault();
                 showModal(e.target);
             }
